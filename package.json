@@ -1,0 +1,27 @@
+{
+  "name": "Stackroute_dataMunging_Plotting",
+  "version": "1.0.0",
+  "description": "using nodejs createRead stream to read CSV and writing into json and plotting graph with d3.js",
+  "main": "datamunging.js",
+  "dependencies": {
+    "eslint": "^4.18.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vdhulappanavar/Stackroute_dataMunging_Plotting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vdhulappanavar/Stackroute_dataMunging_Plotting/issues"
+  },
+  "homepage": "https://github.com/vdhulappanavar/Stackroute_dataMunging_Plotting#readme"
+}
