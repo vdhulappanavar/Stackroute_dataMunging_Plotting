@@ -58,7 +58,6 @@ function write_age_map_json(){
     var fs = require('fs');
     const age_map_file = fs.createWriteStream('./age_map.json');
     age_map_file.write("[\n");
-    //console.log(age_map_dict.length)
     is_first_entery = true;
     for(i in age_map_dict){
         if(is_first_entery){
@@ -125,7 +124,6 @@ function read_async(file_num=0){
         //isheading = true;
         if(file_no==3)
         {
-            console.log("to write")
             write_age_map_json();
              write_education_category();
         }
