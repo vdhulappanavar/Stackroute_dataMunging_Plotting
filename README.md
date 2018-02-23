@@ -10,9 +10,6 @@ From http://sapientlms.stackroute.in/mod/assign/view.php?id=76
 And Place in Root Folder
 ```
 
-##Next Steps : 
-###Generate json files : 
-hiiii
 # Project Title
 
 One Paragraph of project description goes here
