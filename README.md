@@ -3,6 +3,8 @@ using nodejs createRead stream to read CSV and writing into json and plotting gr
 
 Servers File to generate : datamunging.js
     input files to datamunging.js : India2011.csv , IndiaSC2011.csv , IndiaST2011.csv
+        Download these files from : http://sapientlms.stackroute.in/mod/assign/view.php?id=76
+        And place them in the root folder
 
     Output files of datamunging.js : age_map.json and education_category.json
 
