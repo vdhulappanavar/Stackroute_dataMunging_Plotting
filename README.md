@@ -1,13 +1,6 @@
 # Stackroute_dataMunging_Plotting
-using nodejs createRead stream to read CSV and writing into json and plotting graph with d3.js
+##Description : ##
+    Use ***Nodejs*** readline.createInterface stream to read CSV and writing into json and plotting graph with ***d3.js***.
 
-Servers File to generate : datamunging.js
-    input files to datamunging.js : India2011.csv , IndiaSC2011.csv , IndiaST2011.csv
-        Download these files from : http://sapientlms.stackroute.in/mod/assign/view.php?id=76
-        And place them in the root folder
-
-    Output files of datamunging.js : age_map.json and education_category.json
-
-Client side js file to plot graph : plot_graphs.js
-
-Client side html file : index.html
+##How To Set Up And Use##
+    ###Download CSV Files From : ### http://sapientlms.stackroute.in/mod/assign/view.php?id=76
