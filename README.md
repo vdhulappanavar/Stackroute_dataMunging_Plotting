@@ -7,7 +7,7 @@ Download :  India2011.csv , IndiaSC2011.csv and IndiaST2011.csv
 
 From http://sapientlms.stackroute.in/mod/assign/view.php?id=76
 
-And Place in Root Folder
+And Place in input
 ```
 # Commands To Run
 ```

@@ -1,4 +1,3 @@
-
 let headings = [];
 let ageGroupIndex = 0;
 let literatePersons = 0;
@@ -11,41 +10,21 @@ const fs = require('fs');
 const readline = require('readline');
 const stream = require('stream');
 
-const csvToRead = ['./India2011.csv', './IndiaSC2011.csv', './IndiaST2011.csv'];
-
 function getEducationCategoryValues(heading) {
   for (let i = 0; i < heading.length; i += 1) {
-    let headingComponents = heading[i].split('-');
-    if ((headingComponents[0]).trim().localeCompare('Educational level') === 0) {
-      if (headingComponents.length > 3) {
-        headingComponents = headingComponents.slice(1, headingComponents.length - 1);
-        if (!(headingComponents.join(' - ') in educationCategoryDict)) {
-          educationCategoryDict[headingComponents.join(' - ')] = 0;
-          educationCategoryHeading.push(headingComponents.join(' - '));
-        }
-      } else if (!(headingComponents[1] in educationCategoryDict)) {
-        educationCategoryHeading.push(headingComponents[1]);
-        educationCategoryDict[headingComponents[1]] = 0;
+    if (heading[i].trim().startsWith('Educational level')) {
+      const tempHeading = heading[i].split('Educational level - ')[1];
+      const lastIndex = tempHeading.lastIndexOf('-');
+      const finalHeading = tempHeading.substring(0, lastIndex);
+      if (!(finalHeading in educationCategoryDict)) {
+        educationCategoryDict[finalHeading] = 0;
+        educationCategoryHeading.push(finalHeading);
+        educationCategoryindexs.push(i);
       }
-      educationCategoryindexs.push(i);
       i += 2;
     }
   }
 }
-
-function consolidateData(line) {
-  const dataLine = line.split(',');
-  if (!(dataLine[ageGroupIndex] in ageMapDict)) {
-    ageMapDict[dataLine[ageGroupIndex]] = parseInt(dataLine[literatePersons], 10);
-  } else {
-    ageMapDict[dataLine[ageGroupIndex]] += parseInt(dataLine[literatePersons], 10);
-  }
-
-  Object.keys(educationCategoryHeading).forEach((data) => {
-    educationCategoryDict[educationCategoryHeading[data]] += parseInt(dataLine[educationCategoryindexs[data]], 10);
-  });
-}
-
 
 function getHeadingValues(line) {
   headings = line.split(',');
@@ -54,37 +33,32 @@ function getHeadingValues(line) {
   getEducationCategoryValues(headings);
 }
 
-function writeAgeMapJson() {
-  const ageMapFile = fs.createWriteStream('./age_map.json');
-  ageMapFile.write('[\n');
-  let isFirstEntery = true;
-  Object.keys(ageMapDict).forEach((i) => {
-    if (isFirstEntery) {
-      ageMapFile.write(`{\n\t"age_group" : "${i}",\n\t"number" : ${ageMapDict[i]}}\n`);
-      isFirstEntery = !isFirstEntery;
-    } else { ageMapFile.write(`,{\n\t"age_group" : "${i}",\n\t"number" : ${ageMapDict[i]}}\n`); }
+function consolidateData(line) {
+  const dataLine = line.split(',');
+  if (!(dataLine[ageGroupIndex] in ageMapDict)) {
+    ageMapDict[dataLine[ageGroupIndex]] = 0;
+  }
+  ageMapDict[dataLine[ageGroupIndex]] += parseInt(dataLine[literatePersons], 10);
+  Object.keys(educationCategoryHeading).forEach((data) => {
+    educationCategoryDict[educationCategoryHeading[data]] += parseInt(dataLine[educationCategoryindexs[data]], 10);
   });
-  ageMapFile.write(']\n');
-  ageMapFile.end();
 }
 
-function writeEducationCategory() {
+function writeToFile(fileToStream, dict, keyValueName) {
+  const writeStreamVar = fs.createWriteStream(fileToStream);
+  writeStreamVar.write('[\n');
   let isFirstEntery = true;
-
-  const educationCategoryFile = fs.createWriteStream('./education_category.json');
-  educationCategoryFile.write('[\n');
-  Object.keys(educationCategoryDict).forEach((i) => {
+  Object.keys(dict).forEach((i) => {
     if (isFirstEntery) {
-      educationCategoryFile.write(`{\n\t"Education_Category" : "${i}",\n\t"number" : ${educationCategoryDict[i]}\n}\n`);
+      writeStreamVar.write(`{\n\t"age_group" : "${i}",\n\t"number" : ${dict[i]}}\n`);
       isFirstEntery = !isFirstEntery;
-    } else { educationCategoryFile.write(`,{\n\t"Education_Category" : "${i}",\n\t"number" : ${educationCategoryDict[i]}\n}\n`); }
+    } else { writeStreamVar.write(`,{\n\t"${keyValueName}" : "${i}",\n\t"number" : ${ageMapDict[i]}}\n`); }
   });
-  educationCategoryFile.write(']\n');
-  educationCategoryFile.end();
+  writeStreamVar.write(']\n');
+  writeStreamVar.end();
 }
 
-
-function readAsync(file_num = 0) {
+function readAsync(fileName) {
   let isheading = true;
   function main(line) {
     if (isheading) {
@@ -94,10 +68,7 @@ function readAsync(file_num = 0) {
       consolidateData(line);
     }
   }
-
-
-  // var instream = fs.createReadStream('./india2011.csv');
-  const instream = fs.createReadStream(csvToRead[file_num]);
+  const instream = fs.createReadStream(fileName);
   const outstream = new stream();
   const rl = readline.createInterface(instream, outstream);
   rl.on('line', (line) => {
@@ -106,11 +77,19 @@ function readAsync(file_num = 0) {
   rl.on('close', (line) => {
     fileNo += 1;
     if (fileNo === 3) {
-      writeAgeMapJson();
-      writeEducationCategory();
+      const basePath = './output/';
+      writeToFile(`${basePath}age_map.json`, ageMapDict, 'age_group');
+      writeToFile(`${basePath}education_category.json`, ageMapDict, 'Education_Category');
     }
   });
 }
-readAsync(0);
-readAsync(1);
-readAsync(2);
+
+function init() {
+  const basePath = './input/';
+  readAsync(` ${basePath} + India2011.csv`);
+  readAsync(` ${basePath} + IndiaSC2011.csv`);
+  readAsync(` ${basePath} + IndiaST2011.csv`);
+}
+
+init();
+

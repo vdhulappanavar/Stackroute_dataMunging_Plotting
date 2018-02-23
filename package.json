@@ -4,7 +4,8 @@
   "description": "using nodejs createRead stream to read CSV and writing into json and plotting graph with d3.js",
   "main": "datamunging.js",
   "dependencies": {
-    "eslint": "^4.18.1"
+    "eslint": "^4.18.1",
+    "http-server": "^0.11.1"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",
@@ -12,8 +13,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate" : "node datamunging.js",
-    "start" : "http-server"
+    "generate": "node datamunging.js",
+    "start": "http-server",
+    "lint": "./node_modules/.bin/eslint datamunging.js "
   },
   "repository": {
     "type": "git",
