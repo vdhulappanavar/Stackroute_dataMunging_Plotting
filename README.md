@@ -3,6 +3,8 @@ Use **Nodejs** readline.createInterface stream to read CSV and writing into json
 
 ## Set Up
 ```
+npm install : To get the node_modules
+
 Download :  India2011.csv , IndiaSC2011.csv and IndiaST2011.csv 
 
 From http://sapientlms.stackroute.in/mod/assign/view.php?id=76
