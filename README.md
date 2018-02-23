@@ -11,7 +11,7 @@ And Place in Root Folder
 ```
 # Commands To Run
 ```
-npm run generate
+npm run generate : To generate json files
 
-npm start
+npm start : To run server, and view graphs
 ```
