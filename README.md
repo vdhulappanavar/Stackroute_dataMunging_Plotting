@@ -3,7 +3,9 @@ Use **Nodejs** readline.createInterface stream to read CSV and writing into json
 
 ## How To Set Up And Use
 ```
-Download India2011.csv ,  IndiaSC2011.csv and IndiaST2011.csv <br /> From http://sapientlms.stackroute.in/mod/assign/view.php?id=76__
+Download India2011.csv ,  IndiaSC2011.csv and IndiaST2011.csv 
+
+From http://sapientlms.stackroute.in/mod/assign/view.php?id=76__
 And Place in Root Folder
 
 ```
